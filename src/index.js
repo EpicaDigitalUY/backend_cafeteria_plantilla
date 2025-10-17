@@ -24,15 +24,15 @@ app.get("/api/reservas", async (req, res) => {
 });
 
 app.post("/api/reservas", express.json(), async (req, res) => {
-    const { nombre, email, telefono, fecha, hora, personas } = req.body;
+    const { nombre, email, telefono, fecha, hora, invitados } = req.body;
     try {
         const [result] = await db.query(
             "INSERT INTO reservas (nombre, email, telefono, fecha, hora, invitados) VALUES (?, ?, ?, ?, ?, ?)",
-            [nombre, email, telefono, fecha, hora, personas]
+            [nombre, email, telefono, fecha, hora, invitados]
         );
         res
             .status(201)
-            .json({ id: result.insertId, nombre, email, telefono, fecha, hora, personas });
+            .json({ id: result.insertId, nombre, email, telefono, fecha, hora, invitados });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: err.message });
